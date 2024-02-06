@@ -6,7 +6,7 @@ export async function getCards (req, res, next): Promise<any> {
 
         return res.status(200).send({cards})
     } catch (error) {
-        return next
+        return next(error)
     }
 }
 
@@ -19,6 +19,6 @@ export async function getCardsById (req, res, next): Promise<any> {
         // only sending one thing this time
         return res.status(200).send(card)
     } catch (error) {
-        return next
+        return next(error)
     }
 }

@@ -121,4 +121,13 @@ describe('GET: /cards/:cardId', () => {
       },)
     })
   });
+
+  test('400: returns "Bad Request" when given a card id that is not in the database', () => {
+    return request(app)
+    .get("/cards/the-joker")
+    .expect(400)
+    .then((response) => {
+      expect(response.body.msg).toBe('Bad Request')
+    })
+  });
 });

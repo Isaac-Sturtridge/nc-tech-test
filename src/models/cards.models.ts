@@ -30,7 +30,9 @@ export async function selectCardById(id: string): Promise<any> {
         const data = await readFile(`${__dirname}/../data/cards.json`, 'utf-8')
         const parsedData = JSON.parse(data)
         const filtered = parsedData.filter((card) => card.id === id)
-
+        if(filtered.length === 0) {
+            return Promise.reject({status: 400, msg: 'Bad Request'})
+        }
         const newCard = filtered[0]
         return newCard
 

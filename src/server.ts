@@ -1,6 +1,6 @@
 import * as express from "express";
 import { getCards, getCardsById } from "./controllers/cards.controllers";
-import { handleNotFoundError, handleServerErrors } from "./controllers/errors.controllers";
+import { handleNotFoundError, handleCustomErrors, handleServerErrors } from "./controllers/errors.controllers";
 
 export const app = express();
 
@@ -12,5 +12,7 @@ app.get("/cards/:cardId/:sizeId?", getCardsById);
 
 app.get("*", handleNotFoundError);
 
+
+app.use(handleCustomErrors)
 // a final error in case anything goes wrong with the app
 app.use(handleServerErrors)

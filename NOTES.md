@@ -34,3 +34,7 @@ I just wanted to pass the initial test that came with the repo. This was just se
 
 ## second commit
 Just adjusted the output to send through the whole object direct from 'data.json' to pass this test, and removed the interface in the second model as it was no longer necessary (possibly makes it type-safe but didn't complain when I gave it the wrong type, I don't know enough about TS to explain that).
+
+## third commit 
+Error handling. The normal best practice is to do 404 and 400 errors for when a bad request is made. However, as the :cardId is a string without obvious restrictions, and in the interests of time, I think it's best for these purposes to just put in a 400 'Bad Request' for any card not there.
+After a few detail-improvements in the error handling pipeline to ensure that all the promises pass the error on to the right place, we have a reliable custom error set up for handling all types of errors that get rejected from the promises if need be.
