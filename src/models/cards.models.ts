@@ -21,6 +21,23 @@ export async function selectCards(): Promise<any> {
 
         return cards
     } catch (error) {
-        console.error('Error reading cards.json')
+        console.error('Error reading json files')
     }       
+}
+
+export async function selectCardById(id: string): Promise<any> {
+    try {
+        const data = await readFile(`${__dirname}/../data/cards.json`, 'utf-8')
+        const parsedData = JSON.parse(data)
+        const filtered = parsedData.filter((card) => card.id === id)
+        if(filtered.length === 0) {
+            return Promise.reject({status: 400, msg: 'Bad Request'})
+        }
+        const newCard = filtered[0]
+        return newCard
+
+    } catch (error) {
+        console.error('Error reading json files')
+    } 
+
 }

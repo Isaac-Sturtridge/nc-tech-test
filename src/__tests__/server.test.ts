@@ -1,7 +1,7 @@
 import * as request from "supertest";
 import { app } from "../server";
 
-describe.skip("starting test", () => {
+describe("starting test", () => {
   test("returns matching card title", async () => {
     const response = await request(app).get("/cards/card001");
 
@@ -82,5 +82,52 @@ describe("GET: /cards", () => {
           },
         ]);
       });
+  });
+});
+
+
+describe('GET: /cards/:cardId', () => {
+  test('200: should return the card asked for in its full format, title, sizes, pages and basePrice', () => {
+    return request(app)
+    .get("/cards/card002")
+    .expect(200)
+    .then((response) => {
+      const card = response.body
+      expect(card).toEqual({
+        "id": "card002",
+        "title": "card 2 title",
+        "sizes": [
+          "md"
+        ],
+        "basePrice": 200,
+        "pages": [
+          {
+            "title": "Front Cover",
+            "templateId": "template005"
+          },
+          {
+            "title": "Inside Left",
+            "templateId": "template002"
+          },
+          {
+            "title": "Inside Right",
+            "templateId": "template003"
+          },
+          {
+            "title": "Back Cover",
+            "templateId": "template004"
+          }
+        ]
+      },)
+    })
+  });
+
+  test('400: returns "Bad Request" when given a card id that is not in the database', () => {
+    return request(app)
+    .get("/cards/the-joker")
+    .expect(400)
+    .then((response) => {
+      expect(response.body.msg).toBe('Bad Request')
+    })
   });
 });

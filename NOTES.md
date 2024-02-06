@@ -24,3 +24,17 @@ A little bit of jiggling around the data from the templates file and data file a
 I want to consider error handling. As a GET request without any queries, there's limited ways for users to submit a bad request or even a 'not found' error on the endpoint. However this seems like a good time to set up general error handling so I have added that to server.js and an error handler. 
 
 This initial error handling setup provides scaleability and easy structure for errors further down the line. Currently it supports a route-not-found 404 and a 500 error that will only be reached in case of a problem with the server.
+
+# GET Cards/:Card_Id
+
+After an interesting (slightly hairy) pull request, I'm going into the next endpoint. This we will start by passing the starting test that has been sitting there.
+
+## first commit 
+I just wanted to pass the initial test that came with the repo. This was just setting up the cards/:card_id endpoint to return an object with a title, an individual object, though just had to figure out what I was sending through - as it is in the initial test, this endpoint's results will be sent through on response.body. Further tests will go down into their own describe block.
+
+## second commit
+Just adjusted the output to send through the whole object direct from 'data.json' to pass this test, and removed the interface in the second model as it was no longer necessary (possibly makes it type-safe but didn't complain when I gave it the wrong type, I don't know enough about TS to explain that).
+
+## third commit 
+Error handling. The normal best practice is to do 404 and 400 errors for when a bad request is made. However, as the :cardId is a string without obvious restrictions, and in the interests of time, I think it's best for these purposes to just put in a 400 'Bad Request' for any card not there.
+After a few detail-improvements in the error handling pipeline to ensure that all the promises pass the error on to the right place, we have a reliable custom error set up for handling all types of errors that get rejected from the promises if need be.
