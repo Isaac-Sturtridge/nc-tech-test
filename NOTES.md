@@ -28,5 +28,9 @@ This initial error handling setup provides scaleability and easy structure for e
 # GET Cards/:Card_Id
 
 After an interesting (slightly hairy) pull request, I'm going into the next endpoint. This we will start by passing the starting test that has been sitting there.
+
 ## first commit 
 I just wanted to pass the initial test that came with the repo. This was just setting up the cards/:card_id endpoint to return an object with a title, an individual object, though just had to figure out what I was sending through - as it is in the initial test, this endpoint's results will be sent through on response.body. Further tests will go down into their own describe block.
+
+## second commit
+Just adjusted the output to send through the whole object direct from 'data.json' to pass this test, and removed the interface in the second model as it was no longer necessary (possibly makes it type-safe but didn't complain when I gave it the wrong type, I don't know enough about TS to explain that).

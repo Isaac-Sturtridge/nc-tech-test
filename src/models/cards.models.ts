@@ -29,11 +29,9 @@ export async function selectCardById(id: string): Promise<any> {
     try {
         const data = await readFile(`${__dirname}/../data/cards.json`, 'utf-8')
         const parsedData = JSON.parse(data)
-        const filtered = parsedData.filter((card) => card.id === id) 
-        interface formattedCard {
-            title: string
-        }
-        const newCard: formattedCard = {title: filtered[0].title}
+        const filtered = parsedData.filter((card) => card.id === id)
+
+        const newCard = filtered[0]
         return newCard
 
     } catch (error) {
