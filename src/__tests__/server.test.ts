@@ -1,7 +1,7 @@
 import * as request from "supertest";
 import { app } from "../server";
 
-describe.skip("starting test", () => {
+describe("starting test", () => {
   test("returns matching card title", async () => {
     const response = await request(app).get("/cards/card001");
 
