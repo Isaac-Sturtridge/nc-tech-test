@@ -1,4 +1,12 @@
-import {readFile} from 'fs/promises'
+import {writeFile, readFile} from 'fs/promises'
+
+interface card {
+    id: string,
+    title: string,
+    sizes: Array<string>,
+    basePrice: number,
+    pages: Array<any>
+}
 
 export async function selectCards(): Promise<any> {
     try {
@@ -40,4 +48,33 @@ export async function selectCardById(id: string): Promise<any> {
         console.error('Error reading json files')
     } 
 
+}
+
+export async function insertCard(card: card): Promise<any> {
+    try {
+        // add the id to the card
+        const currentCards = await readFile(`${__dirname}/../data/cards.json`, 'utf-8')
+        const parsingCurrentCards = JSON.parse(currentCards)
+        // a system to ensure validity on all card ids in this format
+        if(parsingCurrentCards.length < 9) {
+            card.id = `card00${parsingCurrentCards.length + 1}`
+        } else if(parsingCurrentCards.length < 99) {
+            card.id = `card0${parsingCurrentCards.length + 1}`
+        } else {
+            card.id = `card${parsingCurrentCards.length + 1}`
+        }
+        parsingCurrentCards.push(card)
+        // put it in the file by rewriting everything
+        const newStringedCards = JSON.stringify(parsingCurrentCards)
+        await writeFile(`${__dirname}/../data/cards.json`, newStringedCards)
+
+        // now to read this card
+        const data = await readFile(`${__dirname}/../data/cards.json`, 'utf-8')
+        const parsedData = JSON.parse(data)
+        const filtered = parsedData.filter((checkedCard) => card.id === checkedCard.id)
+        const checkedCard = filtered[0]
+        return checkedCard
+    } catch (error) {
+        console.error('Error inserting the card')
+    }
 }
