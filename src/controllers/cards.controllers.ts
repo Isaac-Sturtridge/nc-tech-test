@@ -1,4 +1,4 @@
-import { selectCards, selectCardById} from "../models/cards.models"
+import { selectCards, selectCardById, insertCard} from "../models/cards.models"
 
 export async function getCards (req, res, next): Promise<any> {
     try {
@@ -18,6 +18,17 @@ export async function getCardsById (req, res, next): Promise<any> {
 
         // only sending one thing this time
         return res.status(200).send(card)
+    } catch (error) {
+        return next(error)
+    }
+}
+
+export async function postCards (req, res, next): Promise<any> {
+    const newCard = req.body
+    try {
+        const completedCard = await insertCard(newCard)
+
+        return res.status(201).send(completedCard)
     } catch (error) {
         return next(error)
     }

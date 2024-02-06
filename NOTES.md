@@ -38,3 +38,11 @@ Just adjusted the output to send through the whole object direct from 'data.json
 ## third commit 
 Error handling. The normal best practice is to do 404 and 400 errors for when a bad request is made. However, as the :cardId is a string without obvious restrictions, and in the interests of time, I think it's best for these purposes to just put in a 400 'Bad Request' for any card not there.
 After a few detail-improvements in the error handling pipeline to ensure that all the promises pass the error on to the right place, we have a reliable custom error set up for handling all types of errors that get rejected from the promises if need be.
+
+# POST cards
+
+Now the challenge will be to put in a post request. With just under an hour left on the repo at this point, I envisage I can get a good implementation of this down, once we parse everything through JSON and identify where the requests are coming from.
+
+## first commit 
+Completed posting a new card to the json file. I went for naming the file from getting the current length of items in the json file, and then using my access
+to those to write a whole new json object into the file with my new card attached. I then read the new file and check that the new addition is in the json file, though of course it is. Added a beforeAll and afterAll to the test suite to clean up the file - also keeping the jest on --watch for this had it constantly restarting the tests (I assume due to the constant changes to cards.json) so I turned that off for now.
